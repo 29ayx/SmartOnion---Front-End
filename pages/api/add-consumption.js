@@ -1,0 +1,36 @@
+import SessionMaster from '../../SessionManager';
+
+export default async function handler(req, res) {
+    const SERVER_URL = SessionMaster.get('serverURL');
+    const { email } = req.query;  // Extract email from query parameters
+
+    // Check if email is provided, and if not, return an error response
+    if (!email) {
+        res.status(400).json({ message: 'Email parameter is missing' });
+        return;
+    }
+
+    try {
+        if (req.method === 'POST') {
+            const externalApiResponse = await fetch(`${SERVER_URL}/api/inventory/${encodeURIComponent(email)}/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(req.body),
+            });
+
+            if (!externalApiResponse.ok) {
+                throw new Error(`Failed to update: ${externalApiResponse.status}`);
+            }
+
+            const data = await externalApiResponse.json();
+            res.status(200).json(data);
+        } else {
+            res.setHeader('Allow', ['POST']);
+            res.status(405).end(`Method ${req.method} Not Allowed`);
+        }
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}

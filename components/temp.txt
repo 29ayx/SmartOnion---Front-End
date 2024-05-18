@@ -1,0 +1,48 @@
+   <div className="card">
+                            <div className="card-header">
+                                <h4 className="card-title">Recent Payments Queue</h4>
+                            </div>
+                            <div className="card-body">
+                                <div className="table-responsive">
+                                    <table className="table table-responsive-md">
+                                        <thead>
+                                            <tr>
+                                                {/* <th style="width:80px;"><strong>#</strong></th> */}
+                                                <th><strong>Name</strong></th>
+                                                <th><strong>Quantity</strong></th>
+                                                <th><strong>Expire</strong></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        {items.length > 0 ? (
+                            items.map((item) => (
+                                <tr key={item.itemId} onClick={() => handleItemClick(item.itemId)} className="custom-tr">
+
+                                    <td >
+                                        <h6 className="fs-16 font-w600 mb-0">
+                                            <a href="javascript:void(0);" className="text-black">{item.name}</a>
+                                        </h6>
+                                        <span className="fs-14">{item.type}</span>
+                                    </td>
+                                    <td >
+                                        <h6 className="fs-16 text-black font-w6 mb-0">{new Date(item.expiryDate).toLocaleDateString()}</h6>
+                                        <span className="fs-14">{new Date(item.expiryDate).toLocaleTimeString()}</span>
+                                    </td>
+                                    <td >
+                                        <span className="fs-16 text-black font-w600">{item.quantity}</span>
+                                    </td>
+                                </tr>
+                            ))
+                        ) : (
+                            <tr >
+                                <td colSpan="4" className="text-center custom-td">No items available.</td>
+                            </tr>
+                        )}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+      
+        </>
+    );
