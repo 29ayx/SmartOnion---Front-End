@@ -8,13 +8,13 @@ export default function UploadForm() {
 
     return (
         <>
-        <Header />
+        <Header title="Shared Feature"/>
 
-        <div className="container-fluid">
+        <div className="container-fluid ">
         <div className='row'>
 
 
-            <div className="widget-stat card bg-warning">
+            <Link href='/newRecipe' className="widget-stat w-80 card bg-warning">
 
                         <div className="card-body p-4">
                             <div className="media">
@@ -24,23 +24,36 @@ export default function UploadForm() {
                                 <div className="media-body text-white">
                                     <p className="mb-1 text-white">Cook something new</p>
                                     <h3 className="text-white">Recipe</h3>
-                                    <small>Reach your goals faster</small>
+
                                 </div>
                             </div>
                         </div>
-            </div>
+            </Link>
 
             <Link href='/reports' className="widget-stat card bg-primary">
 
                         <div className="card-body p-4">
                             <div className="media">
                                 <span className="me-3">
-                                <i class="las la-sort-amount-up"></i>
+                                <i className="las la-sort-amount-up"></i>
                                 </span>
                                 <div className="media-body text-white">
                                     <p className="mb-1 text-white">Track your health better</p>
                                     <h3 className="text-white">Report</h3>
-                                    <small>Understand your routine</small>
+                                </div>
+                            </div>
+                        </div>
+            </Link>
+            <Link href='/shoppinglist' className="widget-stat card bg-secondary">
+
+                        <div className="card-body p-4">
+                            <div className="media">
+                                <span className="me-3">
+                                <i className="las la-shopping-cart"></i>
+                                </span>
+                                <div className="media-body text-white">
+                                    <p className="mb-1 text-white">Easy way to manage shopping</p>
+                                    <h3 className="text-white">Shopping List</h3>
                                 </div>
                             </div>
                         </div>

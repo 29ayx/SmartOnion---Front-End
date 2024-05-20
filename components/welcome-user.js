@@ -1,8 +1,21 @@
-import React from 'react';
+import React, { useEffect, useState } from "react";
+import Cookies from "js-cookie";
 import SessionMaster from '../SessionManager';
 const WelcomeUser = () => {
 
-    const profileName = SessionMaster.get('profileName');
+    const [profileName, setProfileName] = useState([]);
+    const [error, setError] = useState([]);
+    useEffect(() => {
+        // Set email from cookies or SessionMaster
+        const userEmail = Cookies.get('profileName') || SessionMaster.get('profileName');
+        if (userEmail) {
+            setProfileName(userEmail);
+        } else {
+            setError('No email provided.');
+
+        }
+    }, []);
+
     const getTimeOfDayGreeting = () => {
         const hour = new Date().getHours();
         if (hour < 12) return 'Good morning';
@@ -13,7 +26,7 @@ const WelcomeUser = () => {
     const greeting = getTimeOfDayGreeting(); // Get the current time-based greeting
 
     return (
-        <div className="col-xl-3 col-xxl-6  col-sm-6">
+      
             <div className="card overflow-hidden invoice-card position-unset">
                 <div className="card-header bg-gradient3 border-0">
                     <div className="d-flex">
@@ -27,7 +40,7 @@ const WelcomeUser = () => {
                     </div>
                 </div>
             </div>
-        </div>
+
     );
 };
 

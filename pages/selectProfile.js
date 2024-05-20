@@ -9,20 +9,12 @@ import SessionMaster from '../SessionManager'
 import ProfileList from '../components/profile-list';
 
 const SelectProfile = () => {
-    const router = useRouter();
-    useEffect(() => {
-
-    const email = SessionMaster.get('userEmail');
-    if (!email){
-        router.push('/login');
-    }
-    });
 
     return (
 <>
-<div className='container-fluid'>
+
 <ProfileList/>
-</div>
+
 </>
     );
 };

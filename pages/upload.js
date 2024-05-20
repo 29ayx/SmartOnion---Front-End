@@ -11,7 +11,7 @@ export default function UploadForm() {
 
         if (response.ok) {
             const result = await response.json();
-            console.log('File uploaded successfully', result);
+
         } else {
             console.error('Upload failed');
         }

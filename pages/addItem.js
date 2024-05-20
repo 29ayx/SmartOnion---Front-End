@@ -6,6 +6,7 @@ import TitleBar from '../components/header';
 import Footer from '../components/footer';
 import axios from 'axios';
 import SessionMaster from '../SessionManager';
+import Cookies from 'js-cookie';
 
 const Dashboard = () => {
     const [loading, setLoading] = useState(true);
@@ -23,8 +24,9 @@ const Dashboard = () => {
     const router = useRouter();
 
     useEffect(() => {
-        const userEmail = SessionMaster.get('userEmail');
-        setEmail(userEmail);
+        const userEmail = Cookies.get('userEmail');
+        setEmail(userEmail)
+
         if (!userEmail) {
             router.push('/login');
         } else {
@@ -75,8 +77,8 @@ const Dashboard = () => {
     return (
         <>
             <TitleBar title="Add Item"/>
-            <div className='container-fluid'>
-                <div className='col-xl-6 col-lg-6'>
+
+
                     {notification === 'success' && (
                         <div className="alert alert-success solid alert-dismissible fade show">
                             <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round" className="me-2">
@@ -95,6 +97,7 @@ const Dashboard = () => {
                             <strong>Failed to Add Item!</strong>
                         </div>
                     )}
+
                     <div className='card'>
                         <div className='card-header'>
                             <h4 className='card-title'>Add Item To Inventory</h4>
@@ -117,7 +120,7 @@ const Dashboard = () => {
                                         <input
                                             type='number'
                                             className='form-control input-default'
-                                            placeholder='Quantity'
+                                            placeholder='Quantity (KG/Litre/Portion)'
                                             name='quantity'
                                             value={formData.quantity}
                                             onChange={handleInputChange}
@@ -177,8 +180,8 @@ const Dashboard = () => {
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
+
+
             <Footer />
         </>
     );

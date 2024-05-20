@@ -8,13 +8,15 @@ import Footer from '../components/footer';
 import SessionMaster from '../SessionManager'
 import HealthGoal from '../components/healthGoal';
 
+
 const Dashboard = () => {
     const [loading, setLoading] = useState(true);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const router = useRouter();
+    const mail = Cookies.get('userEmail');
     
     useEffect(() => {
-        const profileId = SessionMaster.get('profileId');
+        const profileId = Cookies.get('profileId');
 
         if (!profileId) {
                 router.push('/selectProfile');

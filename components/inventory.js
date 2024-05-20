@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 import serverURL from '../SessionManager';
 import Loading from '../components/loading';
+import Cookies from 'js-cookie';
 
 const InventoryItems = () => {
 
@@ -10,25 +11,31 @@ const InventoryItems = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState('');
     const router = useRouter();
+    const [userEmail, setEmail] = useState('');
 
-    const email = serverURL.get('userEmail');
     useEffect(() => {
+        // Set email from cookies or SessionMaster
+        const userEmail = Cookies.get('userEmail') || serverURL.get('userEmail');
+        if (userEmail) {
+            setEmail(userEmail);
+        } else {
+            router.push('/login')
+            setError('No email provided.');
+            setIsLoading(false);
+        }
+    }, [router]);
 
-        // Function to fetch inventory data
+    useEffect(() => {
+        // Fetch inventory data if email is set
         const fetchInventory = async () => {
-            if (!email) {
-                setError('No email provided.');
-                setIsLoading(false);
-                return;
-            }
+            if (!userEmail) return;
             
             try {
-                const response = await fetch(`/api/get-inventory?email=`+email);
+                const response = await fetch(`/api/get-inventory?email=${userEmail}`);
                 if (!response.ok) {
                     throw new Error('Failed to fetch inventory');
                 }
                 const data = await response.json();
-
                 setItems(data);
                 setIsLoading(false);
             } catch (err) {
@@ -38,12 +45,13 @@ const InventoryItems = () => {
         };
 
         fetchInventory();
-    }, [email]);  // Dependency array includes email to refetch when it changes
+    }, [userEmail]);
+
 
     const handleItemClick = (itemId) => {
         router.push({
             pathname: '/viewItem',
-            query: { email, itemId }
+            query: { userEmail, itemId }
         });
     };
 
@@ -52,6 +60,11 @@ const InventoryItems = () => {
         const notifyBefore = parseFloat(item.notifyBefore);
         return item.crucial === true && quantity <= notifyBefore;
     });
+    const inventoryItems = items.filter(item => {
+        const quantity = parseFloat(item.quantity);
+        return quantity >= 1;
+    });
+    
 
     if (isLoading) return (<>
        
@@ -85,12 +98,12 @@ const InventoryItems = () => {
 
     return (
         <>
-        <div class="row">
+        <div className="row">
 
-				<div class="card">
-					<div class="card-header">
+				<div className="card">
+					<div className="card-header">
                         
-						<h4 class="card-title">Inventory</h4>
+						<h4 className="card-title">Inventory</h4>
                         <Link href="/addItem" className="btn w-50 m-2 mb-6 text-white bg-success">
                     Add Item
                             </Link>
@@ -107,8 +120,8 @@ const InventoryItems = () => {
 									</tr>
 								</thead>
 								<tbody>
-                                {items.length > 0 ? (
-                            items.map((item) => (
+                                {inventoryItems.length > 0 ? (
+                            inventoryItems.map((item) => (
 
                                 <tr key={item.key} onClick={() => handleItemClick(item.itemId)} style={{ cursor: 'pointer' }}>
 
@@ -128,13 +141,11 @@ const InventoryItems = () => {
 						</div>
 					</div>
                     </div>
-				<div class="card">
-					<div class="card-header">
+				<div className="card">
+					<div className="card-header">
                         
-						<h4 class="card-title">Low Stock</h4>
-                        <Link href="/addItem" className="btn w-50 m-2 mb-6 text-white bg-success">
-                    Add Item
-                            </Link>
+						<h4 className="card-title">Low Stock</h4>
+                      
 					</div>
                     
                          <div className="card-body">
@@ -152,7 +163,7 @@ const InventoryItems = () => {
                                             filteredItems.map((item) => (
                                                 <tr key={item.itemId} onClick={() => handleItemClick(item.itemId)} style={{ cursor: 'pointer' }}>
                                                     <td>{item.name}</td>
-                                                    <td><span className="badge badge-primary light">{item.quantity}</span></td>
+                                                    <td><span className="badge badge-danger light">{item.quantity}</span></td>
                                                     <td className="color-primary">{item.expiryDate}</td>
                                                 </tr>
                                             ))

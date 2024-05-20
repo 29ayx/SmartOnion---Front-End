@@ -7,10 +7,12 @@ export default async function handler(req, res) {
     if (req.method === 'POST') {
         const { email, name, quantity, calories, expiryDate, crucial, notifyBefore } = req.body;
 
+
         try {
 
             
             const response = await fetch(`${SERVER_URL}/users/${email}/additem`, {
+           
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

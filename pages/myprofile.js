@@ -24,8 +24,8 @@ const Dashboard = () => {
 
 
     useEffect(() => {
-        const userEmail = SessionMaster.get('userEmail');
-        const profileId = SessionMaster.get('profileId');
+        const userEmail = Cookies.get('userEmail');
+        const profileId = Cookies.get('profileId');
 
         if (!userEmail || !profileId) {
             router.push('/login');
@@ -70,7 +70,7 @@ const Dashboard = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const profileId = SessionMaster.get('profileId');
+            const profileId = Cookies.get('profileId');
             const response = await axios.put(`/api/get-my-profile?profileId=${profileId}`, formData);
             if (!response.ok) {
                 setNotification('success');
@@ -92,7 +92,7 @@ const Dashboard = () => {
     return (
         <>
             <TitleBar title={items.name} />
-            <div className='container-fluid'>
+
    {notification === 'success' && (
                                     <div className="alert alert-success solid alert-dismissible fade show">
                                         <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round" className="me-2">
@@ -182,7 +182,7 @@ const Dashboard = () => {
                         </div>
                     </div>
                 </div>
-            </div>
+
             <Footer />
         </>
     );

@@ -2,19 +2,32 @@ import React, { useEffect, useState } from "react";
 import { useUser } from "../contexts/UserProvider";
 import SessionMaster from "../SessionManager";
 import Link from "next/link";
-
+import Cookies from "js-cookie";
 import Loading from "../components/loading";
 import { useRouter } from "next/router";
+import { set } from "zod";
+import Image from "next/image";
 
 const ProfileList = () => {
   const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
+  const [email, setEmail] = useState('');
   const router = useRouter();
+
+  // if(!Cookies.get('userEmail')){
+  //   router.push('/login')
+  // }else{
+  //   setEmail(Cookies.get('userEmail'))
+
+  // }
 
   const handleProfileClick = (profileId, itemName) => {
     SessionMaster.set("profileId", profileId);
     SessionMaster.set("profileName", itemName);
+    Cookies.set('profileId', profileId);
+    Cookies.set('profileName', itemName);
+
 
     router.push("/");
   };
@@ -22,12 +35,20 @@ const ProfileList = () => {
   const handleLogout = () => {
     SessionMaster.set("profileId", '');
     SessionMaster.set("userEmail", '');
+    SessionMaster.set("profileName", '');
+    Cookies.remove('profileId');
+    Cookies.remove('userEmail');
+    Cookies.remove('profileName');
     router.push('/login')
 
   }
+  
+
 
   useEffect(() => {
-    const email = SessionMaster.get("userEmail");
+
+    
+    const email = Cookies.get('userEmail');
     // Function to fetch inventory data
     const fetchProfiles = async () => {
       if (!email) {
@@ -42,6 +63,7 @@ const ProfileList = () => {
           throw new Error("Failed to fetch profiles");
         }
         const data = await response.json();
+        
         setItems(data);
         setIsLoading(false);
       } catch (err) {
@@ -60,10 +82,7 @@ const ProfileList = () => {
       </>
     );
   if (error) return (<>
-   <div className="container-fluid pl-4 pr-4">
-        <div className="row">
-          <div className="col-xl-7  col-xxl-12 col-md-7">
-            <div className="row">
+   
               <div className="card">
               <div className="card-header border-0 pb-0">
                   
@@ -76,13 +95,13 @@ const ProfileList = () => {
                 </div>
                 <div className="card-body">
                   
-                    <div className="col-sm-6 mb-4">
+
                       <div className="user-bx">
                         <div>
                           <h6 className="user-name">No Profiles Found</h6>
                         </div>
                       </div>
-                    </div>
+
            
 
                   <div className="format-slider"></div>
@@ -96,10 +115,7 @@ const ProfileList = () => {
                   </Link>
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      
   
 
 
@@ -111,11 +127,8 @@ const ProfileList = () => {
    
 
 
-<div className="container-fluid">
-        <div className="row ">
-          <div className="col-xl-7  col-xxl-12 col-md-7">
-            <div className="row">
-              <div className="card border border-dark">
+
+              <div className="card border  border-dark">
                 <div className="card-header border-0 pb-0">
                   
 
@@ -136,7 +149,7 @@ const ProfileList = () => {
                               handleProfileClick(item.profileId, item.name)
                             }
                           >
-                            <img src="/images/profile/small/pic1.jpg" alt="" />
+                            <Image src="/images/profile/small/pic1.png" alt="" height="25"  width="25" />
                             <div>
                               <h6 className="user-name">{item.name}</h6>
                               <span className="meta">ID: {item.profileId}</span>
@@ -166,10 +179,7 @@ const ProfileList = () => {
                   </Link>
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      
       </>
 
   );

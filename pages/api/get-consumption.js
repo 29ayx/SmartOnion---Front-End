@@ -12,7 +12,7 @@ export default async function handler(req, res) {
             },
         });
 
-        console.log(SERVER_URL+`/api/consumption/profile/${encodeURIComponent(profile)}`)
+
 
         if (!externalApiResponse.ok) {
             throw new Error(`Failed to fetch: ${externalApiResponse.status}`);

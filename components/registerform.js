@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useUser } from '../contexts/UserProvider';
 import SessionMaster from '../SessionManager'
 import Image from 'next/image';
+import Cookies from 'js-cookie';
 
 const LoginForm = () => {
     const [email, setEmail] = useState('');
@@ -29,7 +30,8 @@ const LoginForm = () => {
         if (data.success) {
             
             SessionMaster.set('userEmail', email);
-            console.log(SessionMaster.get('userEmail'))
+            Cookies.set('userEmail', email);
+
             setServerMessage('Login successful')
             setNotification('success')
 
@@ -46,16 +48,14 @@ const LoginForm = () => {
     };
 
     return (
-        <div className="authincation ">
-            <div className="container-fluid">
-                <div className="row ">
-                    
-                    <div className="col-lg-6 col-md-12 col-sm-12 align-self-center">
+      
                         
 
-                        <div className="login-form">
+                        <div className="login-form w-100">
                             <div className="text-center">
-                            <Image src="/images/logo.png" alt="logo" height="150" width="150" className="img-fluid mb-3 mt-3" />
+                            <div className="d-flex justify-content-center align-items-center">
+    <Image src="/images/logo.png" alt="logo" height="100" width="100" className="img-fluid mb-3 mt-3" />
+</div>
                                 <h3 className="title">Register your account</h3>
                                 <p>The leading smart fridge application</p>
 
@@ -82,7 +82,7 @@ const LoginForm = () => {
                                 <div className="mb-4">
                                     <label className="mb-1 text-dark">Email</label>
                                     <input
-                                        type="text"
+                                        type="email"
                                         className="form-control form-control"
                                         value={email}
                                         onChange={(e) => setEmail(e.target.value)}
@@ -112,10 +112,7 @@ const LoginForm = () => {
                                 </p>
                             </form>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+          
     );
 };
 

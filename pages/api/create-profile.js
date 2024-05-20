@@ -11,7 +11,7 @@ export default async function handler(req, res) {
     if (req.method === 'POST') {
         const { userEmail, dob, name, dietgoal, allergies } = req.body;
 
-        console.log('Received data:', { userEmail, dob, name, dietgoal, allergies });
+
 
         try {
             const response = await fetch(`${SERVER_URL}/profiles`, {

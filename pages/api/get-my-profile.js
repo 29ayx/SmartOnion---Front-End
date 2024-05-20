@@ -11,7 +11,7 @@ export default async function handler(req, res) {
 
     if (req.method === 'GET') {
         try {
-            console.log(`${SERVER_URL}/profiles/${profileId}`);
+
             const externalApiResponse = await fetch(`${SERVER_URL}/profiles/${profileId}`, {
                 headers: {
                     'Content-Type': 'application/json',

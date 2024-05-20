@@ -124,7 +124,7 @@ const Dashboard = () => {
                                     />
                                 </div>
                                 <div className='mb-3'>
-                                    <label htmlFor='dietgoal' className='form-label'>Diet Goal {"(Enter your calories goal)"} </label>
+                                    <label htmlFor='dietgoal' className='form-label'>Diet Goal {"(Calories goal per day)"} </label>
                                     <input
                                         type='number'
                                         className='form-control input-default'

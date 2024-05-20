@@ -16,7 +16,7 @@ export default async function handler(req, res) {
             }
             // `files` contains data about the uploaded file
             // `fields` will contain any other form fields
-            console.log('Uploaded file:', files);
+
             res.status(200).json({ message: 'File uploaded successfully', data: files });
         });
     } else {

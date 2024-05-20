@@ -2,17 +2,21 @@ import SessionMaster from '../../SessionManager';
 
 export default async function handler(req, res) {
     const SERVER_URL = SessionMaster.get('serverURL');
-    const { email } = req.query;  // Extract email from query parameters
+    const { profileId, quantity, itemId } = req.body;  // Extract profileId, quantity, and itemId from request body
 
-    // Check if email is provided, and if not, return an error response
-    if (!email) {
-        res.status(400).json({ message: 'Email parameter is missing' });
+    // Parse quantity to integer
+    const parsedQuantity = parseInt(quantity, 10);
+
+    if (isNaN(parsedQuantity)) {
+        res.status(400).json({ message: 'Invalid quantity' });
         return;
     }
 
+
+
     try {
         if (req.method === 'POST') {
-            const externalApiResponse = await fetch(`${SERVER_URL}/api/inventory/${encodeURIComponent(email)}/`, {
+            const externalApiResponse = await fetch(`${SERVER_URL}/api/inventory/consume/${encodeURIComponent(profileId)}/${itemId}?quantity=${parsedQuantity}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

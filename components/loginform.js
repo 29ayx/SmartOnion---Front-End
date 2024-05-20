@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
-
+import Cookie from 'js-cookie';
 import { useUser } from '../contexts/UserProvider';
 import SessionMaster from '../SessionManager'
 import Image from 'next/image';
 import Link from 'next/link';
+
 
 const LoginForm = () => {
     const [email, setEmail] = useState('');
@@ -12,6 +13,7 @@ const LoginForm = () => {
     const [serverMessage, setServerMessage] = useState('');
     const [notification, setNotification] = useState('');
     const router = useRouter();
+
 
 
     const handleSubmit = async (event) => {
@@ -28,9 +30,11 @@ const LoginForm = () => {
         const data = await response.json();
 
         if (data.success) {
-            
+            setEmail(email)
+
+            Cookie.set('userEmail', email);
             SessionMaster.set('userEmail', email);
-            console.log(SessionMaster.get('userEmail'))
+
             setServerMessage('Login successful')
             setNotification('success')
 
@@ -47,16 +51,18 @@ const LoginForm = () => {
     };
 
     return (
-        <div className="authincation ">
-            <div className="container-fluid">
-                <div className="row ">
+
+        
+
                     
-                    <div className="col-lg-6 col-md-12 col-sm-12 align-self-center">
+                 
                         
 
-                        <div className="login-form">
-                            <div className="text-center">
-                            <Image src="/images/logo.png" alt="logo" height="150" width="150" className="img-fluid mb-3 mt-3" />
+                        <div className='border-dark'>
+                            <div className="text-center justify-center">
+                            <div className="d-flex justify-content-center align-items-center">
+    <Image src="/images/logo.png" alt="logo" height="100" width="100" className="img-fluid mb-3 mt-3" />
+</div>
 
                                 <h3 className="title">Access to SmartOnion</h3>
                                 <p>Sign in to your account</p>
@@ -80,11 +86,11 @@ const LoginForm = () => {
                             )}
                             
                             </div>
-                            <form onSubmit={handleSubmit}>
+                            <form  onSubmit={handleSubmit}>
                                 <div className="mb-4">
                                     <label className="mb-1 text-dark">Email</label>
                                     <input
-                                        type="text"
+                                        type="email"
                                         className="form-control form-control"
                                         value={email}
                                         onChange={(e) => setEmail(e.target.value)}
@@ -119,10 +125,10 @@ const LoginForm = () => {
                                 </p>
                             </form>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+
+
+
+
     );
 };
 
