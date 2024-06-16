@@ -1,4 +1,10 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Backend : https://github.com/29ayx/SmartOnion
+
+![image](https://github.com/29ayx/SmartOnion/assets/63330200/e58a3f8b-0b8a-4bdd-9674-dd3f39e8c09d)
+![image](https://github.com/29ayx/SmartOnion/assets/63330200/af91e79a-dd69-42be-a2bf-72d9b2c1a3d7)
+![image](https://github.com/29ayx/SmartOnion/assets/63330200/7199f6f0-5770-4a2b-9ce7-8441b508f2ad)
+
+
 
 ## Getting Started
 
@@ -13,12 +19,11 @@ pnpm dev
 # or
 bun dev
 ```
-
+##Configure your backend URL:
+<img width="450" alt="image" src="https://github.com/29ayx/SmartOnion---Front-End/assets/63330200/ebb1a73c-fa07-4174-9a61-3d5bdbc02818">
+##Access the application
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
 ## Learn More
 
@@ -28,9 +33,3 @@ To learn more about Next.js, take a look at the following resources:
 - [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
