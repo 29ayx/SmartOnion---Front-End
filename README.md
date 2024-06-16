@@ -19,9 +19,11 @@ pnpm dev
 # or
 bun dev
 ```
-##Configure your backend URL:
+## Configure your backend URL:
 <img width="450" alt="image" src="https://github.com/29ayx/SmartOnion---Front-End/assets/63330200/ebb1a73c-fa07-4174-9a61-3d5bdbc02818">
-##Access the application
+
+
+## Access the application
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 
